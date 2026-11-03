@@ -1,0 +1,158 @@
+@import './styles/tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-family-base);
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  min-height: 44px;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--color-primary-strong);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-md);
+  top: -100px;
+  z-index: 1000;
+
+  padding: var(--space-sm) var(--space-md);
+
+  background: var(--color-primary-strong);
+  color: white;
+
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+
+  padding: var(--space-md) var(--space-xl);
+
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.mode-label {
+  color: var(--color-text-muted);
+}
+
+.app-header button {
+  padding: var(--space-sm) var(--space-md);
+
+  border: 0;
+  border-radius: var(--radius-md);
+
+  background: var(--color-primary);
+  color: white;
+}
+
+.main-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+
+  padding: var(--space-md) var(--space-xl);
+
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.main-navigation a {
+  display: inline-flex;
+  align-items: center;
+
+  padding: var(--space-sm) var(--space-md);
+
+  border-radius: var(--radius-sm);
+
+  text-decoration: none;
+}
+
+.main-navigation a.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.app-main {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 0 auto;
+
+  padding: var(--space-xl) 0;
+}
+
+.placeholder-page {
+  padding: var(--space-xl);
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.placeholder-page h1 {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .app-header button {
+    width: 100%;
+  }
+
+  .main-navigation {
+    flex-direction: column;
+  }
+
+  .main-navigation a {
+    width: 100%;
+  }
+}
