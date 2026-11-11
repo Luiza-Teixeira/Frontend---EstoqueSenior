@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { AppLayout } from '../components/layout/AppLayout';
 import { PlaceholderPage } from '../components/ui/PlaceholderPage';
+import { LoginPage } from '../features/auth/pages/LoginPage';
 
 export function AppRoutes() {
   return (
@@ -68,14 +69,11 @@ export function AppRoutes() {
         />
       </Route>
 
-      <Route
-        path="/login"
+      <Route 
+        path="/login" 
         element={
-          <PlaceholderPage
-            title="Entrar"
-            description="Acesso ao Estoque Sênior."
-          />
-        }
+          <LoginPage/>
+        } 
       />
     </Routes>
   );
