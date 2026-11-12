@@ -292,3 +292,21 @@
     font-size: 0.85rem;
   }
 }
+
+.field-error {
+  margin: 0.35rem 0 0;
+  color: var(--color-danger);
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.input-shell:has(input[aria-invalid='true']) {
+  border-color: var(--color-danger);
+}
+
+.input-shell:has(input[aria-invalid='true']):focus-within {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgb(180 35 24 / 12%);
+}

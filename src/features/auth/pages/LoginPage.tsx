@@ -116,10 +116,7 @@ function BrandLogo() {
       viewBox="0 0 64 64"
       aria-hidden="true"
     >
-      <path
-        d="M32 5 55 18 32 31 9 18 32 5Z"
-        fill="#9CCCF7"
-      />
+      <path d="M32 5 55 18 32 31 9 18 32 5Z" fill="#9CCCF7" />
 
       <path
         d="M9 18 32 31 32 58 9 45V18Z"
@@ -147,11 +144,38 @@ export function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberAccess, setRememberAccess] = useState(false);
 
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
   function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    const normalizedEmail = email.trim();
+
+    let hasError = false;
+
+    setEmailError('');
+    setPasswordError('');
+
+    if (!normalizedEmail) {
+      setEmailError('Informe seu e-mail.');
+      hasError = true;
+    } else if (!normalizedEmail.includes('@')) {
+      setEmailError('Informe um e-mail válido.');
+      hasError = true;
+    }
+
+    if (!password) {
+      setPasswordError('Informe sua senha.');
+      hasError = true;
+    }
+
+    if (hasError) {
+      return;
+    }
+
     console.log({
-      email,
+      email: normalizedEmail,
       password,
       rememberAccess,
     });
@@ -159,18 +183,32 @@ export function LoginPage() {
 
   return (
     <main className="login-page">
-      <section className="login-wrapper" aria-labelledby="login-title">
-
+      <section
+        className="login-wrapper"
+        aria-labelledby="login-title"
+      >
         <div className="login-card">
-          <div className="corner-shape corner-top-left" aria-hidden="true" />
-          <div className="corner-shape corner-bottom-right" aria-hidden="true" />
+          <div
+            className="corner-shape corner-top-left"
+            aria-hidden="true"
+          />
+
+          <div
+            className="corner-shape corner-bottom-right"
+            aria-hidden="true"
+          />
 
           <header className="login-header">
             <div className="brand-block">
               <BrandLogo />
 
               <div className="brand-text-block">
-                <h1 className="brand-title">Estoque Sênior</h1>
+                <h1
+                  id="login-title"
+                  className="brand-title"
+                >
+                  Estoque Sênior
+                </h1>
               </div>
             </div>
 
@@ -181,9 +219,16 @@ export function LoginPage() {
             </p>
           </header>
 
-          <form className="login-form" onSubmit={handleSubmit}>
+          <form
+            className="login-form"
+            onSubmit={handleSubmit}
+            noValidate
+          >
             <div className="field-group">
-              <label className="sr-only" htmlFor="email">
+              <label
+                className="sr-only"
+                htmlFor="email"
+              >
                 E-mail
               </label>
 
@@ -196,15 +241,37 @@ export function LoginPage() {
                   type="email"
                   autoComplete="email"
                   value={email}
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+
+                    if (emailError) {
+                      setEmailError('');
+                    }
+                  }}
                   placeholder="E-mail"
-                  required
+                  aria-invalid={Boolean(emailError)}
+                  aria-describedby={
+                    emailError ? 'email-error' : undefined
+                  }
                 />
               </div>
+
+              {emailError && (
+                <p
+                  id="email-error"
+                  className="field-error"
+                  role="alert"
+                >
+                  {emailError}
+                </p>
+              )}
             </div>
 
             <div className="field-group">
-              <label className="sr-only" htmlFor="password">
+              <label
+                className="sr-only"
+                htmlFor="password"
+              >
                 Senha
               </label>
 
@@ -217,21 +284,48 @@ export function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+
+                    if (passwordError) {
+                      setPasswordError('');
+                    }
+                  }}
                   placeholder="Senha"
-                  required
+                  aria-invalid={Boolean(passwordError)}
+                  aria-describedby={
+                    passwordError
+                      ? 'password-error'
+                      : undefined
+                  }
                 />
 
                 <button
                   type="button"
                   className="icon-button"
-                  onClick={() => setShowPassword((current) => !current)}
-                  aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  onClick={() =>
+                    setShowPassword((current) => !current)
+                  }
+                  aria-label={
+                    showPassword
+                      ? 'Ocultar senha'
+                      : 'Mostrar senha'
+                  }
                   aria-pressed={showPassword}
                 >
                   <EyeIcon />
                 </button>
               </div>
+
+              {passwordError && (
+                <p
+                  id="password-error"
+                  className="field-error"
+                  role="alert"
+                >
+                  {passwordError}
+                </p>
+              )}
             </div>
 
             <div className="login-options">
@@ -243,20 +337,30 @@ export function LoginPage() {
                     setRememberAccess(event.target.checked)
                   }
                 />
+
                 <span>Lembrar meu acesso</span>
               </label>
 
-              <button type="button" className="text-link">
+              <button
+                type="button"
+                className="text-link"
+              >
                 Esqueci minha senha
               </button>
             </div>
 
-            <button className="primary-button" type="submit">
+            <button
+              className="primary-button"
+              type="submit"
+            >
               <EnterIcon />
               <span>Entrar</span>
             </button>
 
-            <button className="secondary-button" type="button">
+            <button
+              className="secondary-button"
+              type="button"
+            >
               Criar uma conta
             </button>
           </form>
