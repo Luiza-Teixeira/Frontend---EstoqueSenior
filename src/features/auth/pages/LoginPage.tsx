@@ -1,4 +1,5 @@
 import { useState, type SubmitEvent } from 'react';
+import { BrandLogo } from '../../../components/ui/BrandLogo';
 import '../styles/login.css';
 
 function UserIcon() {
@@ -109,35 +110,6 @@ function EnterIcon() {
   );
 }
 
-function BrandLogo() {
-  return (
-    <svg
-      className="brand-logo"
-      viewBox="0 0 64 64"
-      aria-hidden="true"
-    >
-      <path d="M32 5 55 18 32 31 9 18 32 5Z" fill="#9CCCF7" />
-
-      <path
-        d="M9 18 32 31 32 58 9 45V18Z"
-        fill="#4D98DD"
-      />
-
-      <path
-        d="M55 18 32 31 32 58 55 45V18Z"
-        fill="#0752A5"
-      />
-
-      <path
-        d="M9 18 32 31 55 18"
-        fill="none"
-        stroke="#E7F3FF"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
 export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -200,7 +172,10 @@ export function LoginPage() {
 
           <header className="login-header">
             <div className="brand-block">
-              <BrandLogo />
+              <BrandLogo
+                variant="light"
+                className="brand-logo"
+              />
 
               <div className="brand-text-block">
                 <h1

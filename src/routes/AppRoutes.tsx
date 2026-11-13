@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { AppLayout } from '../components/layout/AppLayout';
 import { PlaceholderPage } from '../components/ui/PlaceholderPage';
 import { LoginPage } from '../features/auth/pages/LoginPage';
+import { SettingsPage } from '../features/preferences/pages/SettingsPage';
 
 export function AppRoutes() {
   return (
@@ -61,9 +62,7 @@ export function AppRoutes() {
         <Route
           path="/configuracoes"
           element={
-            <PlaceholderPage
-              title="Configurações"
-              description="Preferências do Estoque Sênior."
+            <SettingsPage
             />
           }
         />
