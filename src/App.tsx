@@ -1,15 +1,18 @@
 import { BrowserRouter } from 'react-router-dom';
 
+import { AccessibilityPreferencesProvider } from './context/AccessibilityPreferencesProvider';
 import { InterfaceModeProvider } from './context/InterfaceModeProvider';
 import { AppRoutes } from './routes/AppRoutes';
 
 function App() {
   return (
-    <InterfaceModeProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </InterfaceModeProvider>
+    <AccessibilityPreferencesProvider>
+      <InterfaceModeProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </InterfaceModeProvider>
+    </AccessibilityPreferencesProvider>
   );
 }
 
