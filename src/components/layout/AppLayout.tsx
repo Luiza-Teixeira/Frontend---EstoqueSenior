@@ -1,6 +1,14 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { useState } from 'react';
 
+import {
+  NavLink,
+  Outlet,
+  useNavigate,
+} from 'react-router-dom';
+
+import { useAuth } from '../../hooks/useAuth';
 import { useInterfaceMode } from '../../hooks/useInterfaceMode';
+import { BrandLogo } from '../ui/BrandLogo';
 import './app-layout.css';
 
 type IconName =
@@ -107,30 +115,34 @@ function NavigationIcon({ name }: { name: IconName }) {
   );
 }
 
-function BrandIcon() {
-  return (
-    <svg
-      className="sidebar-brand-icon"
-      viewBox="0 0 64 64"
-      aria-hidden="true"
-    >
-      <path d="M32 5 55 18 32 31 9 18 32 5Z" fill="#B7DCFF" />
-      <path d="M9 18 32 31 32 58 9 45V18Z" fill="#62A8E8" />
-      <path d="M55 18 32 31 32 58 55 45V18Z" fill="#FFFFFF" />
-    </svg>
-  );
+function getInitials(name?: string) {
+  if (!name) return 'US';
+
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('');
 }
 
 export function AppLayout() {
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const { mode, toggleMode } = useInterfaceMode();
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const isSimplified = mode === 'simplified';
 
+  function handleLogout() {
+    signOut();
+    setShowLogoutDialog(false);
+    navigate('/login', { replace: true });
+  }
+
   return (
     <div
-      className={`app-shell ${
-        isSimplified ? 'app-shell--simplified' : ''
-      }`}
+      className={`app-shell ${isSimplified ? 'app-shell--simplified' : ''}`}
     >
       <a className="skip-link" href="#main-content">
         Ir para o conteúdo principal
@@ -139,8 +151,7 @@ export function AppLayout() {
       <aside className="app-sidebar">
         <div>
           <div className="sidebar-brand">
-            <BrandIcon />
-
+            <BrandLogo variant="dark" className="sidebar-brand-icon" />
             <div>
               <strong>Estoque</strong>
               <strong>Sênior</strong>
@@ -151,19 +162,14 @@ export function AppLayout() {
             {isSimplified ? 'Modo Simplificado' : 'Modo Padrão'}
           </div>
 
-          <nav
-            className="sidebar-navigation"
-            aria-label="Navegação principal"
-          >
+          <nav className="sidebar-navigation" aria-label="Navegação principal">
             {navigationItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 end={item.to === '/'}
                 className={({ isActive }) =>
-                  `sidebar-link ${
-                    isActive ? 'sidebar-link--active' : ''
-                  }`
+                  `sidebar-link ${isActive ? 'sidebar-link--active' : ''}`
                 }
               >
                 <NavigationIcon name={item.icon} />
@@ -177,16 +183,18 @@ export function AppLayout() {
           <NavLink
             to="/configuracoes"
             className={({ isActive }) =>
-              `sidebar-link ${
-                isActive ? 'sidebar-link--active' : ''
-              }`
+              `sidebar-link ${isActive ? 'sidebar-link--active' : ''}`
             }
           >
             <NavigationIcon name="settings" />
             <span>Configurações</span>
           </NavLink>
 
-          <button className="sidebar-link sidebar-logout" type="button">
+          <button
+            className="sidebar-link sidebar-logout"
+            type="button"
+            onClick={() => setShowLogoutDialog(true)}
+          >
             <NavigationIcon name="logout" />
             <span>Sair</span>
           </button>
@@ -195,11 +203,19 @@ export function AppLayout() {
 
       <div className="app-content-area">
         <header className="content-header">
+          <div className="content-header-user" aria-label="Usuário conectado">
+            <span className="content-header-avatar" aria-hidden="true">
+              {getInitials(user?.nome)}
+            </span>
+            <span className="content-header-user-text">
+              <small>Usuário</small>
+              <strong>{user?.nome ?? 'Conta conectada'}</strong>
+            </span>
+          </div>
+
           <div className="content-header-mode">
             <span>Interface atual</span>
-            <strong>
-              {isSimplified ? 'Simplificada' : 'Padrão'}
-            </strong>
+            <strong>{isSimplified ? 'Simplificada' : 'Padrão'}</strong>
           </div>
 
           <button
@@ -207,9 +223,7 @@ export function AppLayout() {
             type="button"
             onClick={toggleMode}
           >
-            {isSimplified
-              ? 'Usar modo padrão'
-              : 'Usar modo simplificado'}
+            {isSimplified ? 'Usar modo padrão' : 'Usar modo simplificado'}
           </button>
         </header>
 
@@ -217,6 +231,41 @@ export function AppLayout() {
           <Outlet />
         </main>
       </div>
+
+      {showLogoutDialog && (
+        <div className="dialog-backdrop" role="presentation">
+          <section
+            className="logout-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="logout-title"
+            aria-describedby="logout-description"
+          >
+            <h2 id="logout-title">Sair do sistema?</h2>
+            <p id="logout-description">
+              Sua sessão será encerrada e você precisará entrar novamente para
+              acessar o sistema.
+            </p>
+
+            <div className="logout-dialog-actions">
+              <button
+                type="button"
+                className="logout-cancel-button"
+                onClick={() => setShowLogoutDialog(false)}
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                className="logout-confirm-button"
+                onClick={handleLogout}
+              >
+                Sair
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 }
