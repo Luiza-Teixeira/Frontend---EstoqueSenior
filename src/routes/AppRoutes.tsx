@@ -1,82 +1,76 @@
-import { Route, Routes } from 'react-router-dom';
+import {
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
 
 import { AppLayout } from '../components/layout/AppLayout';
 import { PlaceholderPage } from '../components/ui/PlaceholderPage';
+import { ForgotPasswordPage } from '../features/auth/pages/ForgotPasswordPage';
+import { LoginPage } from '../features/auth/pages/LoginPage';
+import { RegisterPage } from '../features/auth/pages/RegisterPage';
+import { ResetPasswordPage } from '../features/auth/pages/ResetPasswordPage';
+import { HomePage } from '../features/home/pages/HomePage';
+import { SettingsPage } from '../features/preferences/pages/SettingsPage';
+import { ProtectedRoute } from './ProtectedRoute';
 
 export function AppRoutes() {
   return (
     <Routes>
-      <Route element={<AppLayout />}>
-        <Route
-          path="/"
-          element={
-            <PlaceholderPage
-              title="Início"
-              description="Visão inicial do Estoque Sênior."
-            />
-          }
-        />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/cadastro" element={<RegisterPage />} />
+      <Route path="/esqueci-senha" element={<ForgotPasswordPage />} />
+      <Route path="/redefinir-senha" element={<ResetPasswordPage />} />
 
-        <Route
-          path="/produtos"
-          element={
-            <PlaceholderPage
-              title="Produtos"
-              description="Gerenciamento de produtos."
-            />
-          }
-        />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<HomePage />} />
 
-        <Route
-          path="/estoque"
-          element={
-            <PlaceholderPage
-              title="Estoque"
-              description="Consulta e movimentação de estoque."
-            />
-          }
-        />
+          <Route
+            path="/produtos"
+            element={
+              <PlaceholderPage
+                title="Produtos"
+                description="Gerenciamento de produtos."
+              />
+            }
+          />
 
-        <Route
-          path="/vendas"
-          element={
-            <PlaceholderPage
-              title="Vendas"
-              description="Registro de vendas."
-            />
-          }
-        />
+          <Route
+            path="/estoque"
+            element={
+              <PlaceholderPage
+                title="Estoque"
+                description="Consulta e movimentação de estoque."
+              />
+            }
+          />
 
-        <Route
-          path="/historico"
-          element={
-            <PlaceholderPage
-              title="Histórico"
-              description="Histórico de movimentações."
-            />
-          }
-        />
+          <Route
+            path="/vendas"
+            element={
+              <PlaceholderPage
+                title="Vendas"
+                description="Registro de vendas."
+              />
+            }
+          />
 
-        <Route
-          path="/configuracoes"
-          element={
-            <PlaceholderPage
-              title="Configurações"
-              description="Preferências do Estoque Sênior."
-            />
-          }
-        />
+          <Route
+            path="/historico"
+            element={
+              <PlaceholderPage
+                title="Histórico"
+                description="Histórico de movimentações."
+              />
+            }
+          />
+
+          <Route path="/configuracoes" element={<SettingsPage />} />
+        </Route>
       </Route>
 
-      <Route
-        path="/login"
-        element={
-          <PlaceholderPage
-            title="Entrar"
-            description="Acesso ao Estoque Sênior."
-          />
-        }
-      />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

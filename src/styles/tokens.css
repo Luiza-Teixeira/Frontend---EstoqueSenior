@@ -29,7 +29,7 @@
   --space-xl: 2rem;
 
   --font-family-base:
-    Inter,
+    'Inter',
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
