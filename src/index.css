@@ -1,0 +1,353 @@
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+
+@import './styles/tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-family-base);
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  min-height: 44px;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--color-primary-strong);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-md);
+  top: -100px;
+  z-index: 1000;
+
+  padding: var(--space-sm) var(--space-md);
+
+  background: var(--color-primary-strong);
+  color: white;
+
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+
+  padding: var(--space-md) var(--space-xl);
+
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.mode-label {
+  color: var(--color-text-muted);
+}
+
+.app-header button {
+  padding: var(--space-sm) var(--space-md);
+
+  border: 0;
+  border-radius: var(--radius-md);
+
+  background: var(--color-primary);
+  color: white;
+}
+
+.main-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+
+  padding: var(--space-md) var(--space-xl);
+
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.main-navigation a {
+  display: inline-flex;
+  align-items: center;
+
+  padding: var(--space-sm) var(--space-md);
+
+  border-radius: var(--radius-sm);
+
+  text-decoration: none;
+}
+
+.main-navigation a.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.app-main {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 0 auto;
+
+  padding: var(--space-xl) 0;
+}
+
+.placeholder-page {
+  padding: var(--space-xl);
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.placeholder-page h1 {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .app-header button {
+    width: 100%;
+  }
+
+  .main-navigation {
+    flex-direction: column;
+  }
+
+  .main-navigation a {
+    width: 100%;
+  }
+}
+
+html[data-text-size='default'] {
+  font-size: 100%;
+}
+
+html[data-text-size='large'] {
+  font-size: 112.5%;
+}
+
+html[data-text-size='extra-large'] {
+  font-size: 125%;
+}
+
+html[data-high-contrast='true'] {
+  --color-primary: #ffd600;
+  --color-primary-strong: #ffffff;
+
+  --color-secondary: #00e5ff;
+
+  --color-background: #000000;
+  --color-surface: #000000;
+
+  --color-text: #ffffff;
+  --color-text-muted: #f2f2f2;
+
+  --color-border: #ffffff;
+
+  --color-warning: #ffd600;
+  --color-danger: #ff7070;
+  --color-success: #73ff9d;
+
+  --color-focus: #ffd600;
+}
+
+html[data-high-contrast='true'],
+html[data-high-contrast='true'] body {
+  background: #000000;
+  color: #ffffff;
+}
+
+html[data-high-contrast='true'] .app-shell,
+html[data-high-contrast='true'] .app-content-area,
+html[data-high-contrast='true'] .shell-main,
+html[data-high-contrast='true'] .login-page {
+  background: #000000;
+  color: #ffffff;
+}
+
+html[data-high-contrast='true'] .app-sidebar {
+  background: #000000;
+
+  border-right: 2px solid #ffffff;
+
+  box-shadow: none;
+}
+
+html[data-high-contrast='true'] .content-header,
+html[data-high-contrast='true'] .settings-tabs,
+html[data-high-contrast='true'] .settings-panel,
+html[data-high-contrast='true'] .settings-status,
+html[data-high-contrast='true'] .mode-card,
+html[data-high-contrast='true'] .text-size-card,
+html[data-high-contrast='true'] .contrast-option,
+html[data-high-contrast='true'] .login-card,
+html[data-high-contrast='true'] .input-shell {
+  background: #000000;
+
+  color: #ffffff;
+
+  border-color: #ffffff;
+}
+
+html[data-high-contrast='true'] h1,
+html[data-high-contrast='true'] h2,
+html[data-high-contrast='true'] h3,
+html[data-high-contrast='true'] p,
+html[data-high-contrast='true'] small,
+html[data-high-contrast='true'] strong,
+html[data-high-contrast='true'] span,
+html[data-high-contrast='true'] label,
+html[data-high-contrast='true'] .brand-title,
+html[data-high-contrast='true'] .brand-subtitle,
+html[data-high-contrast='true'] .settings-kicker,
+html[data-high-contrast='true'] .settings-header p,
+html[data-high-contrast='true'] .settings-status span,
+html[data-high-contrast='true'] .settings-status strong,
+html[data-high-contrast='true'] .settings-panel-heading h2,
+html[data-high-contrast='true'] .settings-panel-heading p,
+html[data-high-contrast='true'] .mode-card strong,
+html[data-high-contrast='true'] .mode-card p,
+html[data-high-contrast='true'] .mode-card small,
+html[data-high-contrast='true'] .text-size-card strong,
+html[data-high-contrast='true'] .text-size-card p,
+html[data-high-contrast='true'] .contrast-option strong,
+html[data-high-contrast='true'] .contrast-option p,
+html[data-high-contrast='true'] .content-header-mode span,
+html[data-high-contrast='true'] .content-header-mode strong {
+  color: #ffffff;
+}
+
+html[data-high-contrast='true'] a,
+html[data-high-contrast='true'] .text-link {
+  color: #ffd600;
+}
+
+html[data-high-contrast='true'] .settings-panel-icon,
+html[data-high-contrast='true'] .text-size-preview {
+  background: #ffffff;
+  color: #000000;
+}
+
+html[data-high-contrast='true'] .mode-card--selected,
+html[data-high-contrast='true']
+  .text-size-card--selected {
+  background: #1a1a1a;
+
+  border-color: #ffd600;
+}
+
+html[data-high-contrast='true']
+  .custom-radio {
+  border-color: #ffffff;
+}
+
+html[data-high-contrast='true']
+  .mode-card--selected
+  .custom-radio {
+  border-color: #ffd600;
+}
+
+html[data-high-contrast='true']
+  .mode-card--selected
+  .custom-radio::after {
+  background: #ffd600;
+}
+
+html[data-high-contrast='true']
+  .mode-switch-button,
+html[data-high-contrast='true']
+  .primary-button,
+html[data-high-contrast='true']
+  .settings-tabs
+  .settings-tab-active {
+  background: #ffd600;
+  color: #000000;
+
+  border: 2px solid #ffffff;
+
+  box-shadow: none;
+}
+
+html[data-high-contrast='true']
+  .secondary-button {
+  background: #000000;
+  color: #ffffff;
+
+  border-color: #ffd600;
+}
+
+html[data-high-contrast='true']
+  .settings-accessibility-tip {
+  background: #000000;
+  color: #ffffff;
+
+  border-color: #73ff9d;
+}
+
+html[data-high-contrast='true']
+  .settings-accessibility-tip
+  > div {
+  border-color: #73ff9d;
+}
+
+html[data-high-contrast='true']
+  .input-shell
+  input {
+  color: #ffffff;
+}
+
+html[data-high-contrast='true']
+  .input-shell
+  input::placeholder {
+  color: #dddddd;
+}
+
+html[data-high-contrast='true']
+  :focus-visible {
+  outline-color: #ffd600;
+}
